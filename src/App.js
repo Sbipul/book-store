@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import AddBook from "./components/AddBook/AddBook";
+import BookContainer from "./components/BookContainer/BookContainer";
+import BookHeading from "./components/BookHeading/BookHeading";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <main className="py-12 2xl:px-6">
+        <div className="container grid xl:grid-cols-[auto_350px] 2xl:grid-cols-[auto_400px] gap-4 2xl:gap-8">
+          <div className="order-2 xl:-order-1">
+            <BookHeading />
+            <BookContainer />
+          </div>
+          <div>
+            <AddBook />
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
 
