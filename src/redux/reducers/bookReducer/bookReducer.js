@@ -4,6 +4,7 @@ import {
   REMOVE_BOOK,
   SEARCH_BOOK,
   STORE_FOR_UPDATE,
+  UPDATE_BOOK,
 } from "../../actions/actions";
 
 const initialState = {
@@ -19,7 +20,7 @@ const bookReducer = (state = initialState, action) => {
         books: action.payload,
       };
     case REMOVE_BOOK:
-      const remain = state.books.filter((book) => book.id === action.payload);
+      const remain = state.books.filter((book) => book.id !== action.payload);
       return {
         ...state,
         books: remain,
@@ -33,6 +34,18 @@ const bookReducer = (state = initialState, action) => {
       return {
         ...state,
         updateData: action.payload,
+      };
+    case UPDATE_BOOK:
+      return {
+        ...state,
+        books: state.books.map((book) => {
+          if (book.id !== action.payload.id) {
+            return book;
+          }
+          return {
+            ...action.payload,
+          };
+        }),
       };
     case SEARCH_BOOK:
       const searchedBooks = state.books.filter((book) =>

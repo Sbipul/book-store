@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import addBooks from "../../redux/thunks/addBooks/addBooks";
+import updateBook from "../../redux/thunks/updateBooks/updateBooks";
 
 const AddBook = () => {
   const dispatch = useDispatch();
@@ -8,16 +9,30 @@ const AddBook = () => {
   const { author, featured, name, price, rating, thumbnail } = storeData;
   const [book, setBook] = useState({});
   const setBookData = (e) => {
-    setBook({
-      ...book,
-      [e.target.name]: e.target.value,
-    });
+    const checked = e.target.checked;
+    console.log(checked);
+    if (storeData.id) {
+      setBook({
+        ...storeData,
+        [e.target.name]: e.target.checked ? "true" : e.target.value,
+      });
+    } else {
+      setBook({
+        ...book,
+        [e.target.name]: e.target.checked ? "true" : e.target.value,
+      });
+    }
   };
   const handleAddBook = (e) => {
     e.preventDefault();
-    dispatch(addBooks(book));
+    if (storeData.id) {
+      dispatch(updateBook(book));
+    } else {
+      dispatch(addBooks(book));
+    }
+    setBook({});
+    e.target.reset();
   };
-  console.log(book);
   return (
     <div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
       <h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
@@ -97,6 +112,7 @@ const AddBook = () => {
             onChange={setBookData}
             id="input-Bookfeatured"
             type="checkbox"
+            defaultChecked={storeData.featured === "true" ? true : false}
             name="featured"
             className="w-4 h-4"
           />
@@ -107,7 +123,7 @@ const AddBook = () => {
         </div>
 
         <button type="submit" className="submit" id="submit">
-          Add Book
+          {storeData.id ? "Update book" : "Add Book"}
         </button>
       </form>
     </div>
