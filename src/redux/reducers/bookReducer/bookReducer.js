@@ -10,6 +10,7 @@ import {
 const initialState = {
   books: [],
   updateData: {},
+  search: "",
 };
 
 const bookReducer = (state = initialState, action) => {
@@ -20,7 +21,7 @@ const bookReducer = (state = initialState, action) => {
         books: action.payload,
       };
     case REMOVE_BOOK:
-      const remain = state.books.filter((book) => book.id !== action.payload);
+      const remain = state?.books?.filter((book) => book.id !== action.payload);
       return {
         ...state,
         books: remain,
@@ -48,12 +49,9 @@ const bookReducer = (state = initialState, action) => {
         }),
       };
     case SEARCH_BOOK:
-      const searchedBooks = state.books.filter((book) =>
-        book.name.toLowerCase().includes(action.payload.toLowerCase())
-      );
       return {
         ...state,
-        books: searchedBooks,
+        search: action.payload,
       };
     default:
       return state;

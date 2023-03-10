@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { generateAction, STORE_FOR_UPDATE } from "../../redux/actions/actions";
 import addBooks from "../../redux/thunks/addBooks/addBooks";
 import updateBook from "../../redux/thunks/updateBooks/updateBooks";
 
@@ -9,8 +10,6 @@ const AddBook = () => {
   const { author, featured, name, price, rating, thumbnail } = storeData;
   const [book, setBook] = useState({});
   const setBookData = (e) => {
-    const checked = e.target.checked;
-    console.log(checked);
     if (storeData.id) {
       setBook({
         ...storeData,
@@ -31,6 +30,7 @@ const AddBook = () => {
       dispatch(addBooks(book));
     }
     setBook({});
+    dispatch(generateAction(STORE_FOR_UPDATE, {}));
     e.target.reset();
   };
   return (

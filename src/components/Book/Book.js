@@ -20,7 +20,9 @@ const Book = ({ book }) => {
           )}
           <div className="text-gray-500 space-x-2">
             <button
-              onClick={() => dispatch(generateAction(STORE_FOR_UPDATE, book))}
+              onClick={() => {
+                dispatch(generateAction(STORE_FOR_UPDATE, book));
+              }}
               className="lws-edit"
             >
               <svg
@@ -59,10 +61,7 @@ const Book = ({ book }) => {
         </div>
 
         <div className="space-y-2 mt-4 h-full">
-          <h4 className="lws-bookName">
-            {id}
-            {name}
-          </h4>
+          <h4 className="lws-bookName">{name}</h4>
           <p className="lws-author">{author}</p>
           <div className="lws-stars">
             {Array.from({ length: rating }).map((_, i) => (
